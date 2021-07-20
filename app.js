@@ -52,27 +52,76 @@ for (let i = 0; i < exprLenght+1; i++) {
     }
 }
 console.log(arrExpr);
+console.log(arrExpr.length);
 
-function firstStep(arrExpr){
+function oneStep (arrExpr) {
     let res = 0;
-    for (let i = 0; i < arrExpr.lenght; i++) {
-        if (i % 2 != 0) {
-            if (arrExpr[i] === "*") {
-                res = (arrExpr[i-1] * arrExpr[i+1]);
-            } else if (arrExpr[i] === "*") {
-                res = (arrExpr[i-1] / arrExpr[i+1]);
+    for (let j = 0; j < arrExpr.length; j++) {
+        if (j%2!=0) {
+            console.log(j);
+            if (arrExpr[j] === "*") {
+                res = (arrExpr[j-1] * arrExpr[j+1]);
+                arrExpr = arrExpr.filter(item => item !== arrExpr[j]);
+                arrExpr = arrExpr.filter(item => item !== arrExpr[j]);
+                arrExpr[j-1] = res;
+                break;
+            } else if (arrExpr[j] === "/") {
+                res = (arrExpr[j-1] / arrExpr[j+1]);
+                arrExpr = arrExpr.filter(item => item !== arrExpr[j]);
+                arrExpr = arrExpr.filter(item => item !== arrExpr[j]);
+                arrExpr[j-1] = res;
+                break;
             }
-            arrExpr.splice[i, i];
-            arrExpr.splice[i, i];
-            arrExpr[i-1] = res;
-            break;
+
         }
     }
+    return (arrExpr);
+};
+
+function twoStep (arrExpr) {
+    let res = 0;
+    for (let j = 0; j < arrExpr.length; j++) {
+        if (j%2!=0) {
+            console.log(j);
+            if (arrExpr[j] === "+") {
+                res = (arrExpr[j-1] + arrExpr[j+1]);
+                console.log(arrExpr);
+                arrExpr = arrExpr.filter(item => item !== arrExpr[j]);
+                console.log(arrExpr);
+                arrExpr = arrExpr.filter(item => item !== arrExpr[j]);
+                console.log(arrExpr);
+                arrExpr[j-1] = res;
+                break;
+            } else if (arrExpr[j] === "-") {
+                res = (arrExpr[j-1] - arrExpr[j+1]);
+                console.log(arrExpr);
+                arrExpr = arrExpr.filter(item => item !== arrExpr[j]);
+                console.log(arrExpr);
+                arrExpr = arrExpr.filter(item => item !== arrExpr[j]);
+                console.log(arrExpr);
+                arrExpr[j-1] = res;
+                break;
+            }
+
+        }
+    }
+    return (arrExpr);
+};
+
+while (true){
+    if(arrExpr.find(item => item === "*")){
+        arrExpr = oneStep(arrExpr);
+    } else if (arrExpr.find(item => item === "/")) {
+        arrExpr = oneStep(arrExpr);
+    } else if (arrExpr.find(item => item === "-")){
+        arrExpr = twoStep(arrExpr);
+    } else if ((arrExpr.find(item => item === "+"))) {
+        arrExpr = twoStep(arrExpr);
+    } else {
+        break;
+    }
     console.log(arrExpr);
-    return arrExpr;
+
 }
 
-arrExpr = firstStep(arrExpr);
 console.log(arrExpr);
-
-
