@@ -1,25 +1,21 @@
-/*
-console.log("========================================");
-expression = "100-20/4*2-2*3+6";
-console.log(expression);
-console.log("========================================");
-let arrExpr = [];
-const regex = new RegExp(/\+|\-|\*|\//);
-let exprLenght = expression.length;
-let start = 0;
-for (let i = 0; i < exprLenght+1; i++) {
-    if (regex.test(expression.charAt(i))) {
-        arrExpr.push(parseInt(expression.substring(start,i)));
-        start = i+1;
-        arrExpr.push(expression.charAt(i));
-    } 
-    if(i == exprLenght) {
-        arrExpr.push(parseInt(expression.substring(start, exprLenght)));
+function simpleDifferentiation (expression) {
+    let arrExpr = [];
+    const regex = new RegExp(/\+|\-|\*|\//);
+    let exprLenght = expression.length;
+    let start = 0;
+    for (let i = 0; i < exprLenght+1; i++) {
+        if (regex.test(expression.charAt(i))) {
+            arrExpr.push(parseInt(expression.substring(start,i)));
+            start = i+1;
+            arrExpr.push(expression.charAt(i));
+        } 
+        if(i == exprLenght) {
+            arrExpr.push(parseInt(expression.substring(start, exprLenght)));
+        }
     }
+    return (arrExpr);
 }
-console.log(arrExpr);
-console.log(arrExpr.length);
-*/
+
 function stepOne (arrExpr) {
     let res = 0;
     for (let j = 0; j < arrExpr.length; j++) {
@@ -61,117 +57,59 @@ function stepTwo (arrExpr) {
     }
     return (arrExpr);
 };
-/*
-while (true){
-    if(arrExpr.find(item => item === "*") || arrExpr.find(item => item === "/")){
-        arrExpr = stepOne(arrExpr);
-        console.log(arrExpr);
-    } else if (arrExpr.find(item => item === "-") || (arrExpr.find(item => item === "+"))){
-        arrExpr = stepTwo(arrExpr);
-        console.log(arrExpr);
-    } else {
-        break;
-    }
-}
-*/
 
-console.log("========================================");
-console.log("========================================");
-console.log("========================================");
-
-
-function calculator(expression) {
-    let arrExpr = [];
-    const regex = new RegExp(/\+|\-|\*|\//);
-    let exprLenght = expression.length;
-    let start = 0;
-    for (let i = 0; i < exprLenght+1; i++) {
-        if (regex.test(expression.charAt(i))) {
-            arrExpr.push(parseInt(expression.substring(start,i)));
-            start = i+1;
-            arrExpr.push(expression.charAt(i));
-        } 
-        if(i == exprLenght) {
-            arrExpr.push(parseInt(expression.substring(start, exprLenght)));
-        }
-    }
+function calculation (arrExpr) {
     while (true){
         if(arrExpr.find(item => item === "*") || arrExpr.find(item => item === "/")){
             arrExpr = stepOne(arrExpr);
-            console.log(arrExpr);
         } else if (arrExpr.find(item => item === "-") || (arrExpr.find(item => item === "+"))){
             arrExpr = stepTwo(arrExpr);
-            console.log(arrExpr);
         } else {
             break;
         }
     }
-    return arrExpr;
-    
+    return arrExpr[0];
 }
 
-
-
-
-
-expression = "400-(100-20)/(4*(2-2)*3+6)+3";
-let braket = /\(/;
-
-function makeMeBetter(expression){
+function trimer(expression){
     let barcketsRe = /\(|\)/;
-    let preCalcArr = expression.split(barcketsRe);
-    console.log(preCalcArr);
     let startDigit = /^\d+/;
     let endDigit = /\d+$/;
+
+    let preCalcArr = expression.split(barcketsRe);
+    let arrExpr = [];
+    let calculatedItem;
+
     for (let j = 0; j < preCalcArr.length; j++) {
         if (startDigit.test(preCalcArr[j]) && endDigit.test(preCalcArr[j])) {
             let regex = "(" + preCalcArr[j] + ")";
-            let replaceItemToCalc = calculator(preCalcArr[j]);
-            console.log(replaceItemToCalc[0]);
-            expression = expression.replace(regex, replaceItemToCalc[0]);
-            console.log(expression);
+
+            //let replaceItemToCalc = calculator(preCalcArr[j]);
+                arrExpr = simpleDifferentiation(preCalcArr[j]);
+                calculatedItem = calculation(arrExpr);
+
+            expression = expression.replace(regex, calculatedItem);
         }
     }
     return expression;
 }
 
-while (true) {
-    if (braket.test(expression)) {
-        expression = makeMeBetter(expression);
-    } else {
-        break;
+function bracketsDifferentiation (expression) {
+    let bracket = /\(/;
+    while (true) {
+        if (bracket.test(expression)) {
+            expression = trimer(expression);
+        } else {
+            break;
+        }
     }
+    return expression;
 }
 
+let expression = "400-(100-20)/(4*(2-2)*3+6)+3";
+console.log(expression);
+expression = bracketsDifferentiation(expression);
+let prepairedExpression = simpleDifferentiation(expression);
+let answer = calculation(prepairedExpression);
 
-
-
-let arrExpr = [];
-const regex = new RegExp(/\+|\-|\*|\//);
-let exprLenght = expression.length;
-let start = 0;
-for (let i = 0; i < exprLenght+1; i++) {
-    if (regex.test(expression.charAt(i))) {
-        arrExpr.push(parseInt(expression.substring(start,i)));
-        start = i+1;
-        arrExpr.push(expression.charAt(i));
-    } 
-    if(i == exprLenght) {
-        arrExpr.push(parseInt(expression.substring(start, exprLenght)));
-    }
-}
-console.log(arrExpr);
-console.log(arrExpr.length);
-
-
-while (true){
-    if(arrExpr.find(item => item === "*") || arrExpr.find(item => item === "/")){
-        arrExpr = stepOne(arrExpr);
-        console.log(arrExpr);
-    } else if (arrExpr.find(item => item === "-") || (arrExpr.find(item => item === "+"))){
-        arrExpr = stepTwo(arrExpr);
-        console.log(arrExpr);
-    } else {
-        break;
-    }
-}
+console.log(answer.toFixed(3));
