@@ -1,3 +1,4 @@
+/*
 function simpleDifferentiation (expression) {
     let arrExpr = [];
     const regex = new RegExp(/\+|\-|\*|\//);
@@ -106,7 +107,7 @@ function bracketsDifferentiation (expression) {
     return expression;
 }
 
-/*
+
 let expression = "400.36-(100-20.05)/(4*(2-2)*3+6)+3";
 console.log(expression);
 expression = bracketsDifferentiation(expression);
@@ -116,8 +117,9 @@ let answer = calculation(prepairedExpression);
 console.log(answer.toFixed(3));
 */
 
-
 //тут мы считаем что к чему
+$("button").on( "click", function() {
+
 class calcModel {
     singleBracketRe = /\(/;
     barcketsRe = /\(|\)/;
@@ -262,9 +264,12 @@ class calcView {
 class calcController {
 
 }
-/*
+
 let expression = "4*-2.9*3+6";
 let calculator = new calcModel(expression);
 let answer = calculator.getAnswer();
 console.log(answer);
-*/
+
+});
+
+ 
