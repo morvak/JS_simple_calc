@@ -135,19 +135,33 @@ class calcModel {
         let result = [];
         const regex = new RegExp(/\+|\-|\*|\//);
         let expLenght = expToArray.length;
-        expLenght++;
         let start = 0;
         for (let i = 0; i < expLenght+1; i++) {
             if (regex.test(expToArray.charAt(i))) {
+               if (isNaN(parseInt(expToArray.substring(start,i)))) {
+                    result.push("NaN");
+                    start = i+1;
+                    result.push(expToArray.charAt(i));
+                } else {
                 result.push(Number(expToArray.substring(start,i)));
                 start = i+1;
                 result.push(expToArray.charAt(i));
-            } 
+                }
+            }
             if(i == expLenght) {
                 result.push(Number(expToArray.substring(start, expLenght)));
             }
-            console.log(result);
         }
+        console.log(result);
+        for (let i = 0; i < result.length; i++){
+            if (isNaN(result[i]) && result[i]!=="+" && result[i]!=="-" && result[i]!=="*" && result[i]!=="/") {
+                result.splice(i, 1);
+                let sign = result[i];
+                result.splice(i, 1);
+                result[i] = Number(sign+result[i]);
+            }
+        }
+        console.log(result);
         return (result);
     }
 
@@ -199,10 +213,8 @@ class calcModel {
         while(true) {
             if (arrExpr.find(item => item === "*") || arrExpr.find(item => item === "/")){
                 arrExpr = this.majorOperatios(arrExpr);
-                console.log(arrExpr);
             } else if (arrExpr.find(item => item === "-") || (arrExpr.find(item => item === "+"))){
                 arrExpr = this.minorOperations(arrExpr);
-                console.log(arrExpr);
             } else {
                 break;
             } 
@@ -222,7 +234,6 @@ class calcModel {
                             arrExpr = this.expressionSpread(preCalcArr[j]);
                             calculatedItem = this.doCalculation(arrExpr);
                         this.expression = this.expression.replace(regex, calculatedItem);
-                        console.log(this.expression);
                     }
                 }
             } else {
@@ -251,8 +262,9 @@ class calcView {
 class calcController {
 
 }
-
+/*
 let expression = "4*-2.9*3+6";
 let calculator = new calcModel(expression);
 let answer = calculator.getAnswer();
 console.log(answer);
+*/
