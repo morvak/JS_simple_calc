@@ -22,18 +22,17 @@
       <hr>
       <form class="row">
         <div class="col-sm-12">
-          <input type="text" class="form-control" placeholder="2+(11-(34+66)-22*5)/(4+2)">
+          <input type="text" id="expression" class="form-control" placeholder="2+(11-(34+66)-22*5)/(4+2)">
         </div>
         <div class="col-sm-12 d-grid gap-2 mt-2">
-          <button type="button" class="btn btn-outline-primary">CALCULATE</button>
+          <button type="button" id="calculate" class="btn btn-outline-primary">CALCULATE</button>
         </div>
       </form>
       <hr>
 
       <datalist class="row">
-        <p class="col-sm-12 text-center">
-          Here will be your operation history. <br>
-<!--           Alo you can import or export operations to file by buttons -->
+        <p id="textToChange" class="col-sm-12 text-center">
+          Here will be your operation history.<br>
         </p>
 <!--        
         <div class="btn-group col-sm-2" role="group" aria-label="Export|Import">
@@ -42,9 +41,7 @@
         </div>
 -->
         <ul class="list-group col-sm-12">
-          <li class="list-group-item">((34+66)-22*5)/4 = 184,95</li>
-          <li class="list-group-item">184,95*75-44 = 13 827,53</li>
-          <li class="list-group-item">e.t.c.</li>
+          
         </ul>
       </datalist> 
     </div>
