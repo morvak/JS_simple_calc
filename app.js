@@ -160,7 +160,7 @@ $("#calculate").on( "click", function(){
     let calculator = new calcModel(expression);
     let answer = calculator.getAnswer();
     let outputParent = document.getElementsByTagName("ul");
-    $(outputParent).append('<li class="list-group-item">'+expression+" = "+answer+'</li>');
+    $(outputParent).append('<li class="col-sm-10 list-group-item">'+expression+" = "+answer+'<button type="button" class="btn btn-outline-primary col-sm-2"><i class="far fa-copy"></i></button></li>');
     document.getElementById("expression").value = "";
     document.getElementById("textToChange").innerHTML = "History of operations:<br>"
 });
