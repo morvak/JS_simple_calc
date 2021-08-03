@@ -155,12 +155,53 @@ class calcController {
     console.log("hello!");
 
 */
+$("ul").on( "click", function(e){
+    navigator.clipboard.writeText(e.target.id);
+});
+
+$("#clean").on( "click", function(){
+    document.getElementById("expression").value = "";
+});
+
 $("#calculate").on( "click", function(){
     let expression = document.getElementById("expression").value;
     let calculator = new calcModel(expression);
     let answer = calculator.getAnswer();
     let outputParent = document.getElementsByTagName("ul");
-    $(outputParent).append('<li class="col-sm-10 list-group-item">'+expression+" = "+answer+'<button type="button" class="btn btn-outline-primary col-sm-2"><i class="far fa-copy"></i></button></li>');
-    document.getElementById("expression").value = "";
-    document.getElementById("textToChange").innerHTML = "History of operations:<br>"
+    
+    $(outputParent).append(
+        '<li class="list-group-item">' +
+        expression +
+        " = " + 
+        answer + 
+        '<i class="btn btn-outline-success far fa-clone float-end" id="' +
+        answer +
+        '"></i></li>'
+    );
+    
+    document.getElementById("expression").value = answer;
+    document.getElementById("textToChange").innerHTML = "History of operations:<br>";
 });
+
+$("#expressionForm").keypress(function(e){
+    if (e.which == "13") {    
+        let expression = document.getElementById("expression").value;
+        let calculator = new calcModel(expression);
+        let answer = calculator.getAnswer();
+        let outputParent = document.getElementsByTagName("ul");
+        
+        $(outputParent).append(
+            '<li class="list-group-item">' +
+            expression +
+            " = " + 
+            answer + 
+            '<i class="btn btn-outline-success far fa-clone float-end" id="' +
+            answer +
+            '"></i></li>'
+        );
+        
+        document.getElementById("expression").value = answer;
+        document.getElementById("textToChange").innerHTML = "History of operations:<br>";
+    }
+});
+

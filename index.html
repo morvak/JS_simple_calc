@@ -20,18 +20,21 @@
         <p class="bd-lead">Please input expression to field below</p>
       </header>
       <hr>
-      <form class="row">
+      <form class="row" id="expressionForm" onsubmit="return false">
         <div class="col-sm-12">
           <input type="text" id="expression" class="form-control" placeholder="2+(11-(34+66)-22*5)/(4+2)">
         </div>
         <div class="col-sm-12 d-grid gap-2 mt-2">
           <button type="button" id="calculate" class="btn btn-outline-primary">CALCULATE</button>
         </div>
+        <div class="col-sm-12 d-grid gap-2 mt-2">
+          <button type="button" id="clean" class="btn btn-outline-dark">CLEAR</button>
+        </div>
       </form>
       <hr>
 
-      <datalist class="row text-center">
-        <p id="textToChange" class="col-sm-12">
+      <datalist class="row">
+        <p id="textToChange">
           Here will be your operation history.<br>
         </p>
 <!--        
@@ -41,10 +44,13 @@
         </div>
 --> 
         <ul class="list-group">
+<!-- 
           <li class="align-middle">2.4-(45+92*8.1)+1-100<button type="button" class="btn btn-outline-primary"><i class="far fa-copy"></i></button></li>
+-->  
         </ul>
-
+<!--
         <p class="col-sm-12 align-middle">2.4-(45+92*8.1)+1-100<button type="button" class="float-end btn btn-outline-primary"><i class="far fa-copy"></i></button></p>
+--> 
       </datalist> 
     </div>
 
