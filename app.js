@@ -47,19 +47,16 @@ class calcModel {
     majorOperatios(arrExpr) {
         let res = 0;
         for (let j = 0; j < arrExpr.length; j++) {
-            if (j%2!=0) {
-                if (arrExpr[j] === "*") {
-                    res = (arrExpr[j-1] * arrExpr[j+1]);
-                    arrExpr.splice(j, 2);
-                    arrExpr[j-1] = res;
-                    break;
-                } else if (arrExpr[j] === "/") {
-                    res = (arrExpr[j-1] / arrExpr[j+1]);
-                    arrExpr.splice(j, 2);
-                    arrExpr[j-1] = res;
-                    break;
-                }
-    
+            if (arrExpr[j] === "*") {
+                res = (arrExpr[j-1] * arrExpr[j+1]);
+                arrExpr.splice(j, 2);
+                arrExpr[j-1] = res;
+                break;
+            } else if (arrExpr[j] === "/") {
+                res = (arrExpr[j-1] / arrExpr[j+1]);
+                arrExpr.splice(j, 2);
+                arrExpr[j-1] = res;
+                break;
             }
         }
         return (arrExpr);
@@ -69,19 +66,16 @@ class calcModel {
     minorOperations(arrExpr) {
         let res = 0;
         for (let j = 0; j < arrExpr.length; j++) {
-            if (j%2!=0) {
-                if (arrExpr[j] === "+") {
-                    res = (arrExpr[j-1] + arrExpr[j+1]);
-                    arrExpr.splice(j, 2);
-                    arrExpr[j-1] = res;
-                    break;
-                } else if (arrExpr[j] === "-") {
-                    res = (arrExpr[j-1] - arrExpr[j+1]);
-                    arrExpr.splice(j, 2);
-                    arrExpr[j-1] = res;
-                    break;
-                }
-    
+            if (arrExpr[j] === "+") {
+                res = (arrExpr[j-1] + arrExpr[j+1]);
+                arrExpr.splice(j, 2);
+                arrExpr[j-1] = res;
+                break;
+            } else if (arrExpr[j] === "-") {
+                res = (arrExpr[j-1] - arrExpr[j+1]);
+                arrExpr.splice(j, 2);
+                arrExpr[j-1] = res;
+                break;
             }
         }
         return (arrExpr);
@@ -156,7 +150,17 @@ class calcController {
 
 */
 $("ul").on( "click", function(e){
-    navigator.clipboard.writeText(e.target.id);
+    check = Number(e.target.id);
+    if (!isNaN(check)) {
+        navigator.clipboard.writeText(e.target.id);    
+    } else {
+        count = document.getElementsByTagName("li").length;
+        console.log(count);
+        if (count === 1) {
+            document.getElementById("textToChange").innerHTML = "Here will be your operation history.<br>";
+        }
+        document.getElementById(e.target.id).parentElement.remove();
+    }
 });
 
 $("#clean").on( "click", function(){
@@ -173,10 +177,14 @@ $("#calculate").on( "click", function(){
         '<li class="list-group-item">' +
         expression +
         " = " + 
-        answer + 
-        '<i class="btn btn-outline-success far fa-clone float-end" id="' +
         answer +
-        '"></i></li>'
+        '<i class="btn btn-outline-success fas fa-copy float-end" id="' +
+        answer +
+        '"></i>' +     
+        '<i class="btn btn-outline-danger far fa-eraser float-end" id="delete' +
+        answer +
+        '"></i>' +        
+        '</li>'
     );
     
     document.getElementById("expression").value = answer;
@@ -194,14 +202,24 @@ $("#expressionForm").keypress(function(e){
             '<li class="list-group-item">' +
             expression +
             " = " + 
-            answer + 
-            '<i class="btn btn-outline-success far fa-clone float-end" id="' +
             answer +
-            '"></i></li>'
+            '<i class="btn btn-outline-success fas fa-copy float-end" id="' +
+            answer +
+            '"></i>' +     
+            '<i class="btn btn-outline-danger far fa-eraser float-end" id="delete' +
+            answer +
+            '"></i>' +        
+            '</li>'
         );
         
         document.getElementById("expression").value = answer;
-        document.getElementById("textToChange").innerHTML = "History of operations:<br>";
+        document.getElementById("textToChange").innerHTML = '<i class="btn btn-outline-warning fas fa-file-export float-end" id="saveOperations"></i>History of operations:<br>';
     }
 });
 
+$("#textToChange").on( "click", function(e){
+    if (e.target.id === "saveOperations") {
+        console.log("im here!");
+        
+    }
+});
